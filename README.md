@@ -1,4 +1,4 @@
-Everything up to x days ago will be deleted.
+All files uploaded before x days ago will be deleted.
 
 ## Use
 `python main.py token days`
