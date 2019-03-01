@@ -12,6 +12,6 @@ Example: `python main.py xoxojfiwjfoiwejfejwio 30 images,zips`
 
 filetypes: ` all, spaces (Posts), snippets, images, gdocs, zips, pdfs`
 
-Get token at `https://api.slack.com/custom-integrations/legacy-tokens`
+Get token [here](https://api.slack.com/custom-integrations/legacy-tokens)
 
 Inspired by [slack-cleaner](https://github.com/kfei/slack-cleaner)
