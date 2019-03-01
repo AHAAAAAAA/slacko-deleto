@@ -6,19 +6,18 @@ import sys
 import time
 from slacker import Slacker
 
-counter = 0
-
 def prev_ts(days):
     date = datetime.datetime.today()
     delta = datetime.timedelta(days=days)
     return (date - delta).timestamp()
 
-def remove_files(slack, ts):
+def remove_files(slack, ts, types):
   # Deletes everything up to the provided ts
   page = 1
   has_more = True
+  counter = 0
   while has_more:
-    res = slack.files.list(ts_to=ts).body
+    res = slack.files.list(ts_to=ts, types=types).body
 
     if not res['ok']:
       print('SLACK MAD')
@@ -32,26 +31,27 @@ def remove_files(slack, ts):
 
     for f in files:
       # Delete user file
-      delete_file(slack, f)
+        counter += delete_file(slack, f)
+    return counter
 
 def delete_file(slack, f):
     # Actually perform the task
     try:
         # No response is a good response
       slack.files.delete(f['id'])
-      counter += 1
+      return 1
     except Exception as error:
-        counter -= 1
         print("Can't delete ", f['id'])
+        return 0
 
 def main():
     # Use: python main.py token days
     # Example: python main.py xoxojfiwjfoiwejfejwio 30
     # Get token at https://api.slack.com/custom-integrations/legacy-tokens
     # Everything up to x days ago will be deleted
-    [_, token, days] = sys.argv
+    [_, token, days, types] = sys.argv
     api = Slacker(token)
-    remove_files (api, prev_ts(int(days)))
-    return "Deleted " + str(counter) + " files"
+    deleted = remove_files (api, prev_ts(int(days)), types)
+    return "Deleted " + str(deleted) + " files"
 
 print(main())
