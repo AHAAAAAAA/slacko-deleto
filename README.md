@@ -2,12 +2,11 @@ Everything up to x days ago of filetypes a,b,c will be deleted.
 
 ## Setup
 1. `pipenv install`
-2. `pipenv shell`
 
 or just `pip install slacker` like a normal person
 
 ## Use
-`python main.py token days filetypes`
+`(pipenv run) python main.py token days filetypes`
 
 Example: `python main.py xoxojfiwjfoiwejfejwio 30 images,zips`
 
